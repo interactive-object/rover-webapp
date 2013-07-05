@@ -1,4 +1,4 @@
-Robot-webapp
+Rover Webapp
 ============
 
 A NodeJs web application to control arduino rover over Bluetooth.
