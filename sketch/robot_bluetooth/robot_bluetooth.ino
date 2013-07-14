@@ -1,5 +1,5 @@
 /*
-Sample Code to run the Sparkfun TB6612FNG 1A Dual Motor Driver using Arduino UNO R3
+Arduinoe Code to run the Sparkfun TB6612FNG 1A Dual Motor Driver
 
 This code conducts a few simple manoeuvres to illustrate the functions:
   - motorDrive(motorNumber, motorDirection, motorSpeed)
