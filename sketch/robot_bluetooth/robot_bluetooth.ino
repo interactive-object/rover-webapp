@@ -21,21 +21,23 @@ Connections:
 
 */
 
-//Define the Pins
+// variables needed to sonar
+long pulse, inches, cm, largeDistance, shortDistance;
 
 //Motor 1
-int pinAIN1 = 9; //Direction
-int pinAIN2 = 8; //Direction
-int pinPWMA = 3; //Speed
+const int pinAIN1 = 9; //Direction
+const int pinAIN2 = 8; //Direction
+const int pinPWMA = 3; //Speed
 
 //Motor 2
-int pinBIN1 = 11; //Direction
-int pinBIN2 = 12; //Direction
-int pinPWMB = 5; //Speed
-int LED = 13;
-
+const int pinBIN1 = 11; //Direction
+const int pinBIN2 = 12; //Direction
+const int pinPWMB = 5; //Speed
 //Standby
-int pinSTBY = 10;
+const int pinSTBY = 10;
+const int LED = 13;
+const int IRpin = 1; 
+const int SONAR = 7; 
 
 //Constants to help remember the parameters
 static boolean turnCW = 0;  //for motorDrive function
@@ -57,6 +59,7 @@ void setup()
 
   pinMode(pinSTBY, OUTPUT);
   pinMode(LED, OUTPUT);
+  pinMode(SONAR, INPUT);
   
   Serial.begin(57600);  
 
@@ -64,7 +67,34 @@ void setup()
 
 void loop()
 {
-    if( Serial.available() )         // if data is available to read
+  
+  //Pulse Width representation with a scale factor of 147 uS per Inch.
+  pulse = pulseIn(SONAR, HIGH);
+  //147uS per inch
+  inches = pulse/147;
+  //change inches to centimetres
+  cm = inches * 2.54;  
+  if(largeDistance != cm){
+    largeDistance = cm;
+    Serial.print("large => "); 
+    Serial.print(largeDistance); 
+    Serial.print("cm"); 
+    Serial.println(); 
+  }
+  
+  // value from sensor * (5/1024) - if running 3.3.volts then change 5 to 3.3
+  float volts = analogRead(IRpin)*0.0048828125;   
+  // worked out from graph 65 = theretical distance / (1/Volts)S 
+  float distance = 65*pow(volts, -1.10);          
+  if(shortDistance != distance){
+    shortDistance = distance;
+    Serial.print("short => "); 
+    Serial.print(shortDistance); 
+    Serial.print("cm"); 
+    Serial.println(); 
+  }
+    
+  if( Serial.available() )         // if data is available to read
   {
     val = Serial.read();          // read it and store it in 'val'
     digitalWrite(LED, HIGH);
@@ -92,7 +122,25 @@ void loop()
     {
         motorDrive(motor2, turnCW, 192);
         motorDrive(motor1, turnCCW, 192);
-                
+             
+    }else if( val == 'G') // forward Left
+    {
+        motorDrive(motor1, turnCW, 255);
+        motorDrive(motor2, turnCW, 100);
+    }else if( val == 'I') // forward right
+    {
+        motorDrive(motor1, turnCW, 100);
+        motorDrive(motor2, turnCW, 255);
+        
+    }else if( val == 'H') // Back Left
+    {
+        motorDrive(motor1, turnCCW, 255);
+        motorDrive(motor2, turnCCW, 100);
+    }else if( val == 'J') // back right
+    {
+        motorDrive(motor1, turnCCW, 100);
+        motorDrive(motor2, turnCCW, 255);
+    
     } else { 
       //Apply Brakes, then into Standby
       motorBrake(motor1);
@@ -100,6 +148,8 @@ void loop()
       motorsStandby();
       
     }
+  }else{
+    delay(100);
   }
 }
 
