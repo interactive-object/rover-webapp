@@ -13,15 +13,13 @@ var express = require('express'),
 
 
 var SerialPort = require("serialport").SerialPort;
-
-
 var serial = new SerialPort("/dev/tty.FireFly-E6F7-SPP", { baudrate : 57600 });
 serial.on("data", function (sdata) {
   
 });
 
 serial.on("open", function (sdata) {
-  console.log('serial opened');
+  console.log('Serial opened');
 });
 
   
@@ -46,32 +44,48 @@ app.get('/', function (req, res) {
 });
 
 
+// ----------------------------------------------
+// - backward
+//     			: 100 -full speed
+//     			: 110 -meduim speed
+//     			: 120 -slow speed    
+// - forward
+//     			: 200 -full speed
+//     			: 210 -meduim speed
+//     			: 220 -slow speed    
+// ----------------------------------------------
+// ----------------------------------------------
+// 
+// - brake		: 300
+// - left			: 40
+// - right		: 50
+// - straight	: 10
+//
+// ----------------------------------------------
+
 var server = app.listen(app.get('port'));
 var everyone = require("now").initialize(server);
 
 everyone.now.forward = function(callback){
-  serial.write('F');
-  stop();
+  serial.write(100);
 }
 
 everyone.now.backward = function(callback){
-  serial.write('B');
-  stop();
+  serial.write(200);
 }
 
 everyone.now.left = function(callback){
-  serial.write('L');
-  stop();
+  serial.write(40);
 }
 
 everyone.now.right = function(callback){
-  serial.write('R');
-  stop();
+  serial.write(50);
 }
 
-function stop(){
-  setTimeout(function(){
-  serial.write('S');  
-  }, 500);
+everyone.now.brake = function(callback){
+  serial.write(300);
 }
 
+everyone.now.straight = function(callback){
+  serial.write(10);
+}

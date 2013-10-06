@@ -6,20 +6,40 @@ var jQT = new $.jQTouch({
             });
             
 $(function(){
-  $(".forward-button").click(function(){
+	
+	$(".forward-button").mouseup(function(){
+		now.stop();
+	});
+	
+  $(".forward-button").mousedown(function(){
     now.forward();
   });
-  $(".backward-button").click(function(){
+	
+	
+  $(".backward-button").mousedown(function(){
     now.backward();
   });
 
-  $(".left-button").click(function(){
+  $(".backward-button").mouseup(function(){
+    now.stop();
+  });
+	
+	
+  $(".left-button").mousedown(function(){
     now.left();
   });       
 
-  $(".right-button").click(function(){
+  $(".right-button").mousedown(function(){
     now.right();
   });       
 
+
+  $(".left-button").mouseup(function(){
+    now.straight();
+  });       
+
+  $(".right-button").mouseup(function(){
+    now.straight();
+  });  
            
 });
