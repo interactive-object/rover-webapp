@@ -65,25 +65,25 @@ var server = app.listen(app.get('port'));
 var everyone = require("now").initialize(server);
 
 everyone.now.forward = function(callback){
-  //serial.write(100);
+  serial.write('f');
 }
 
 everyone.now.backward = function(callback){
-  //serial.write(200);
+  serial.write('b');
 }
 
 everyone.now.left = function(callback){
-  //serial.write(40);
+  serial.write('l');
 }
 
 everyone.now.right = function(callback){
-  //serial.write(50);
+  serial.write('r');
 }
 
 everyone.now.brake = function(callback){
-  //serial.write(300);
+  serial.write('a');
 }
 
 everyone.now.straight = function(callback){
-  //serial.write(10);
+  serial.write('s');
 }
