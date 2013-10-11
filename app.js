@@ -87,7 +87,7 @@ everyone.now.straight = function(callback){
   straight();
 }
 
-unction forward(){
+function forward(){
         wpi.digitalWrite(I1, 0);
         wpi.digitalWrite(I2, 1);
 }
