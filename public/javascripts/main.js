@@ -1,38 +1,37 @@
-
 $(function(){
 	
-	$(".forward-button").mouseup(function(){
+	$(".up").mouseup(function(){
 		now.stop();
 	});
 	
-  $(".forward-button").mousedown(function(){
+  $(".up").mousedown(function(){
     now.forward();
   });
 	
 	
-  $(".backward-button").mousedown(function(){
+  $(".down").mousedown(function(){
     now.backward();
   });
 
-  $(".backward-button").mouseup(function(){
+  $(".down").mouseup(function(){
     now.stop();
   });
 	
 	
-  $(".left-button").mousedown(function(){
+  $(".left").mousedown(function(){
     now.left();
   });       
 
-  $(".right-button").mousedown(function(){
+  $(".right").mousedown(function(){
     now.right();
   });       
 
 
-  $(".left-button").mouseup(function(){
+  $(".left").mouseup(function(){
     now.straight();
   });       
 
-  $(".right-button").mouseup(function(){
+  $(".right").mouseup(function(){
     now.straight();
   });  
            
