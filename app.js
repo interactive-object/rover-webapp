@@ -79,7 +79,7 @@ app.post('/right', function (req, res) {
   right();
 });
 
-app.post('/brake', function (req, res) {	
+app.post('/stop', function (req, res) {	
   brake();
 });
 
