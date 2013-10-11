@@ -77,7 +77,7 @@ app.post('/left', function (req, res) {
 
 app.post('/right', function (req, res) {
   right();
-}
+});
 
 app.post('/brake', function (req, res) {	
   brake();
