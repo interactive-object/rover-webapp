@@ -12,22 +12,17 @@ html
     link(rel='stylesheet', href='stylesheets/jqtouch.css')
 
     script(src='javascripts/zepto.min.js')    
-    script(src='javascripts/jqtouch.min.js')
     script(src='javascripts/json2.js')    
     script(src="/nowjs/now.js")
     script(src='javascripts/main.js')
   body
 
 
-  div#jqt
-    div#start
-      div.toolbar
-        h1 robot
-        a.button.slideup(href="#about") About
-      div.scroll
-        a.forward-button(href="#", class="whiteButton") Forward
-        a.backward-button(href="#", class="whiteButton") Backward
-        a.left-button(href="#", class="whiteButton") Left
-        a.right-button(href="#", class="whiteButton") Right
+  div.wrapper
+    iframe(src='http://192.168.0.107:8090/?action=stream')
+    a.up() w
+    a.left() a
+    a.down() s
+    a.right() d
           
       
