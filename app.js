@@ -9,15 +9,21 @@ var express = require('express'),
 
 wpi.setup();
 
-var I1 = 2, I2 =3, I3=13, I4=14;
+var EA=0, I1 = 2, I2 =3, EB=12, I3=13, I4=14;
+
+wpi.softPwmCreate(EA, 0, 100);
 wpi.pinMode(I1, wpi.modes.OUTPUT);
 wpi.pinMode(I2, wpi.modes.OUTPUT);
+
+wpi.softPwmCreate(EB, 0, 100);
 wpi.pinMode(I3, wpi.modes.OUTPUT);
 wpi.pinMode(I4, wpi.modes.OUTPUT);
 
 wpi.digitalWrite(I1, 0);
 wpi.digitalWrite(I2, 0);
 
+wpi.softPwmWrite(EA, 100);
+wpi.softPwmWrite(EB, 100);
 
 app.configure(function () {
 	app.set('port', process.env.PORT || 3003);
