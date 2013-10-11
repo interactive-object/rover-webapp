@@ -4,40 +4,40 @@ now.ready(function(){
     // "Hello World!" will print on server
     console.log("now ready");
   
-  
+});
 	$(".up").mouseup(function(){
-		now.stop();
+		$.post( "/stop");
 	});
 	
   $(".up").mousedown(function(){
-    now.forward();
+    $.post( "/forward");
   });
 	
 	
   $(".down").mousedown(function(){
-    now.backward();
+    $.post( "/backward");
   });
 
   $(".down").mouseup(function(){
-    now.stop();
+    $.post( "/stop");
   });
 	
 	
   $(".left").mousedown(function(){
-    now.left();
+    $.post( "/left");
   });       
 
   $(".right").mousedown(function(){
-    now.right();
+    $.post( "/right");
   });       
 
 
   $(".left").mouseup(function(){
-    now.straight();
+    $.post( "/straight");
   });       
 
   $(".right").mouseup(function(){
-    now.straight();
+    $.post( "/straight");
   });  
-});
+
 });
