@@ -63,29 +63,29 @@ app.get('/', function (req, res) {
 var server = app.listen(app.get('port'));
 var everyone = require("now").initialize(server);
 
-everyone.now.forward = function(callback){
+app.post('/forward', function (req, res) {
   forward();
-}
+});
 
-everyone.now.backward = function(callback){
+app.post('/backward', function (req, res) {
   backward();
-}
+});
 
-everyone.now.left = function(callback){
+app.post('/left', function (req, res) {
   left();
-}
+});
 
-everyone.now.right = function(callback){
+app.post('/right', function (req, res) {
   right();
 }
 
-everyone.now.brake = function(callback){
+app.post('/brake', function (req, res) {	
   brake();
-}
+});
 
-everyone.now.straight = function(callback){
+app.post('/straight', function (req, res) {	
   straight();
-}
+});
 
 function forward(){
         wpi.digitalWrite(I1, 0);
