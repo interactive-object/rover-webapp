@@ -3,7 +3,7 @@ $(function(){
 now.ready(function(){
     // "Hello World!" will print on server
     console.log("now ready");
-  });
+  
   
 	$(".up").mouseup(function(){
 		now.stop();
@@ -39,5 +39,5 @@ now.ready(function(){
   $(".right").mouseup(function(){
     now.straight();
   });  
-           
+});
 });
