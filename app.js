@@ -3,22 +3,21 @@ var express = require('express'),
 	util = require('util'),
 	app = express(),
 	_ = require('underscore'),
-	nowjs = require("now");
+	nowjs = require("now"),
+	wpi = require('wiring-pi'),
+	async = require('async');
 
+wpi.setup();
 
+var I1 = 2, I2 =3, I3=13, I4=14;
+wpi.pinMode(I1, wpi.modes.OUTPUT);
+wpi.pinMode(I2, wpi.modes.OUTPUT);
+wpi.pinMode(I3, wpi.modes.OUTPUT);
+wpi.pinMode(I4, wpi.modes.OUTPUT);
 
+wpi.digitalWrite(I1, 0);
+wpi.digitalWrite(I2, 0);
 
-	var SerialPort = require("serialport").SerialPort;
-	var serial = new SerialPort("/dev/tty.FireFly-E6F7-SPP", { baudrate : 57600 });
-	
-
-	serial.on("open", function (sdata) {
-	  console.log('Serial opened');
-		serial.on("data", function (sdata) {
-  
-		});
-	});
-	
 
 app.configure(function () {
 	app.set('port', process.env.PORT || 3003);
@@ -65,25 +64,58 @@ var server = app.listen(app.get('port'));
 var everyone = require("now").initialize(server);
 
 everyone.now.forward = function(callback){
-  serial.write('f');
+  forward();
 }
 
 everyone.now.backward = function(callback){
-  serial.write('b');
+  backward();
 }
 
 everyone.now.left = function(callback){
-  serial.write('l');
+  left();
 }
 
 everyone.now.right = function(callback){
-  serial.write('r');
+  right();
 }
 
 everyone.now.brake = function(callback){
-  serial.write('a');
+  brake();
 }
 
 everyone.now.straight = function(callback){
-  serial.write('s');
+  straight();
+}
+
+unction forward(){
+        wpi.digitalWrite(I1, 0);
+        wpi.digitalWrite(I2, 1);
+}
+
+
+function backward(){
+wpi.digitalWrite(I1, 1);
+        wpi.digitalWrite(I2, 0);
+}
+
+function brake(){
+wpi.digitalWrite(I1, 1);
+        wpi.digitalWrite(I2, 1);
+}
+
+
+function left(){
+wpi.digitalWrite(I3, 0);
+        wpi.digitalWrite(I4, 1);
+}
+
+function right(){
+wpi.digitalWrite(I3, 1);
+        wpi.digitalWrite(I4, 0);
+}
+
+
+function straight(){
+        wpi.digitalWrite(I3, 1);
+        wpi.digitalWrite(I4, 1);
 }
