@@ -71,26 +71,32 @@ var everyone = require("now").initialize(server);
 
 app.post('/forward', function (req, res) {
   forward();
+  console.log("forward");
 });
 
 app.post('/backward', function (req, res) {
   backward();
+  console.log("backward");
 });
 
 app.post('/left', function (req, res) {
   left();
+  console.log("left");
 });
 
 app.post('/right', function (req, res) {
   right();
+  console.log("right");
 });
 
 app.post('/stop', function (req, res) {	
   brake();
+  console.log("stop");
 });
 
 app.post('/straight', function (req, res) {	
   straight();
+  console.log("straight");
 });
 
 function forward(){
