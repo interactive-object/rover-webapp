@@ -50,7 +50,7 @@ now.ready(function(){
       case 37:
         if(!aIsDown) return;
         aIsDown = false;
-        now.staight();
+        now.straight();
         $('.left').removeClass('active');
         break;
       case 40:
