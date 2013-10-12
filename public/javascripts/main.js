@@ -11,7 +11,7 @@ now.ready(function(){
 
   $(document).keydown(function(e){
       
-      console.log(e.which);
+      console.log(now);
       
     switch(e.which){
       case 38:
