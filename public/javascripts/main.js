@@ -9,6 +9,10 @@ now.ready(function(){
     dIsDown = false;
 
   $(document).keydown(function(e){
+      
+      console.log(e.which);
+      console.log(now);
+      console.log(window.now);
     switch(e.which){
       case 87:
         if(wIsDown) return;
