@@ -22,8 +22,8 @@ wpi.pinMode(I4, wpi.modes.OUTPUT);
 wpi.digitalWrite(I1, 0);
 wpi.digitalWrite(I2, 0);
 
-wpi.pwmWrite(EA, 100);
-wpi.pwmWrite(EB, 100);
+wpi.pwmWrite(EA, 1);
+wpi.pwmWrite(EB, 1);
 
 app.configure(function () {
 	app.set('port', process.env.PORT || 3003);
