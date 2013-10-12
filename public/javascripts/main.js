@@ -64,7 +64,7 @@ now.ready(function(){
       case 39:
         if(!dIsDown) return;
         dIsDown = false;
-        now.staight();
+        now.straight();
         $('.right').removeClass('active');
         break;
     }
