@@ -1,10 +1,10 @@
 $(function(){
 
 now.ready(function(){
+     console.log("ready")
 });
 
-     var socket = io.connect(),
-    wIsDown = false,
+     var socket = wIsDown = false,
     aIsDown = false,
     sIsDown = false,
     dIsDown = false;
@@ -12,8 +12,7 @@ now.ready(function(){
   $(document).keydown(function(e){
       
       console.log(e.which);
-      console.log(now);
-      console.log(window.now);
+      
     switch(e.which){
       case 38:
         if(wIsDown) return;
