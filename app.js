@@ -11,19 +11,19 @@ wpi.setup();
 
 var EA=0, I1 = 2, I2 =3, EB=12, I3=13, I4=14;
 
-wpi.softPwmCreate(EA, 100, 100);
+wpi.pinMode(EA, wpi.modes.PWM_OUTPUT);
 wpi.pinMode(I1, wpi.modes.OUTPUT);
 wpi.pinMode(I2, wpi.modes.OUTPUT);
 
-wpi.softPwmCreate(EB, 100, 100);
+wpi.pinMode(EB, wpi.modes.PWM_OUTPUT);
 wpi.pinMode(I3, wpi.modes.OUTPUT);
 wpi.pinMode(I4, wpi.modes.OUTPUT);
 
 wpi.digitalWrite(I1, 0);
 wpi.digitalWrite(I2, 0);
 
-//wpi.softPwmWrite(EA, 100);
-//wpi.softPwmWrite(EB, 100);
+wpi.pwmWrite(EA, 100);
+wpi.pwmWrite(EB, 100);
 
 app.configure(function () {
 	app.set('port', process.env.PORT || 3003);
