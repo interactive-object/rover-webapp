@@ -1,7 +1,8 @@
 $(function(){
 
 now.ready(function(){
-    
+});
+
      var socket = io.connect(),
     wIsDown = false,
     aIsDown = false,
@@ -70,7 +71,5 @@ now.ready(function(){
     }
   });
     
-});
-  
 
 });
