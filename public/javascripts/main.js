@@ -11,8 +11,6 @@ now.ready(function(){
 
   $(document).keydown(function(e){
       
-      console.log(now);
-      
     switch(e.which){
       case 38:
         if(wIsDown) return;
@@ -35,7 +33,7 @@ now.ready(function(){
       case 39:
         if(dIsDown) return;
         dIsDown = true;
-        now.left();
+        now.right();
         $('.right').addClass('active');
         break;
     }
