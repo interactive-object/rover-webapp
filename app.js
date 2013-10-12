@@ -52,32 +52,32 @@ app.get('/', function (req, res) {
 var server = app.listen(app.get('port'));
 var everyone = require("now").initialize(server);
 
-everyone.forward = function (req, res) {
+everyone.now.forward = function (req, res) {
   forward();
   console.log("forward");
 }
 
-everyone.backward = function (req, res) {
+everyone.now.backward = function (req, res) {
   backward();
   console.log("backward");
 }
 
-everyone.left = function (req, res) {
+everyone.now.left = function (req, res) {
   left();
   console.log("left");
 }
 
-everyone.right= function (req, res) {
+everyone.now.right= function (req, res) {
   right();
   console.log("right");
 }
 
-everyone.stop = function (req, res) {	
+everyone.now.stop = function (req, res) {	
   brake();
   console.log("stop");
 }
 
-everyone.straight = function (req, res) {	
+everyone.now.straight = function (req, res) {	
   straight();
   console.log("straight");
 }
