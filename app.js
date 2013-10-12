@@ -48,56 +48,39 @@ app.get('/', function (req, res) {
 });
 
 
-// ----------------------------------------------
-// - backward
-//     			: 100 -full speed
-//     			: 110 -meduim speed
-//     			: 120 -slow speed    
-// - forward
-//     			: 200 -full speed
-//     			: 210 -meduim speed
-//     			: 220 -slow speed    
-// ----------------------------------------------
-// 
-// - brake		: 300
-// - left			: 40
-// - right		: 50
-// - straight	: 10
-//
-// ----------------------------------------------
 
 var server = app.listen(app.get('port'));
 var everyone = require("now").initialize(server);
 
-app.post('/forward', function (req, res) {
+everyone.forward = function (req, res) {
   forward();
   console.log("forward");
-});
+}
 
-app.post('/backward', function (req, res) {
+everyone.backward = function (req, res) {
   backward();
   console.log("backward");
-});
+}
 
-app.post('/left', function (req, res) {
+everyone.left = function (req, res) {
   left();
   console.log("left");
-});
+}
 
-app.post('/right', function (req, res) {
+everyone.right= function (req, res) {
   right();
   console.log("right");
-});
+}
 
-app.post('/stop', function (req, res) {	
+everyone.stop = function (req, res) {	
   brake();
   console.log("stop");
-});
+}
 
-app.post('/straight', function (req, res) {	
+everyone.straight = function (req, res) {	
   straight();
   console.log("straight");
-});
+}
 
 function forward(){
         wpi.digitalWrite(I1, 0);
