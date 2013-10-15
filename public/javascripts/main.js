@@ -9,6 +9,7 @@ now.ready(function(){
     sIsDown = false,
     dIsDown = false;
 
+     
   $(document).keydown(function(e){
       
     switch(e.which){
