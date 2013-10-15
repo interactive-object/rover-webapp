@@ -8,26 +8,21 @@ html
     meta(name="apple-mobile-web-app-capable", content="yes")
     meta(name="apple-mobile-web-app-status-bar-style", content="default")
         
+    link(rel='stylesheet', href='stylesheets/normalize.css')
     link(rel='stylesheet', href='stylesheets/style.css')
-    link(rel='stylesheet', href='stylesheets/jqtouch.css')
 
-    script(src='javascripts/zepto.min.js')    
-    script(src='javascripts/jqtouch.min.js')
-    script(src='javascripts/json2.js')    
-    script(src="/nowjs/now.js")
-    script(src='javascripts/main.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js')    
+    script(src='/javascripts/json2.js')    
+    script(src='/javascripts/main.js')
   body
 
-
-  div#jqt
-    div#start
-      div.toolbar
-        h1 robot
-        a.button.slideup(href="#about") About
-      div.scroll
-        a.forward-button(href="#", class="whiteButton") Forward
-        a.backward-button(href="#", class="whiteButton") Backward
-        a.left-button(href="#", class="whiteButton") Left
-        a.right-button(href="#", class="whiteButton") Right
+  div.loader
+    span Chargement...
+  div.wrapper(style="display:none");
+    img(src="/stream/?action=stream")
+    a.up() 
+    a.left() 
+    a.down() 
+    a.right() 
           
       

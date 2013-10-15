@@ -6,10 +6,12 @@
     "start": "node app"
   },
   "dependencies": {
-    "express": "*",
-    "serialport":"*",
-    "jade": "*",
+    	"express": "*",
+    	"serialport":"*",
+    	"jade": "*",
 	"underscore": "*",
-	"now": "*"
+	"now": "*",
+	"wiring-pi": "*",
+	"async": "*"
   }
 }
