@@ -67,7 +67,7 @@ void setup()
 
 void loop()
 {
-  
+  /*
   //Pulse Width representation with a scale factor of 147 uS per Inch.
   pulse = pulseIn(SONAR, HIGH);
   //147uS per inch
@@ -93,15 +93,15 @@ void loop()
     Serial.print("cm"); 
     Serial.println(); 
   }
-    
+   */
   if( Serial.available() )         // if data is available to read
   {
     val = Serial.read();          // read it and store it in 'val'
     digitalWrite(LED, HIGH);
 
     // say what you got:
-    Serial.print("I received: ");
-    Serial.println(val);
+    //Serial.print("I received: ");
+    //Serial.println(val);
     // delay 10 milliseconds to allow serial update time
     delay(10);
 
@@ -141,7 +141,7 @@ void loop()
         motorDrive(motor1, turnCCW, 100);
         motorDrive(motor2, turnCCW, 255);
     
-    } else { 
+    } else if( val == 'S')  {  // Stop
       //Apply Brakes, then into Standby
       motorBrake(motor1);
       motorBrake(motor2);
