@@ -83,14 +83,14 @@ everyone.now.straight = function (req, res) {
 }
 
 function forward(){
-        wpi.digitalWrite(I1, 0);
-        wpi.digitalWrite(I2, 1);
+        wpi.digitalWrite(I2, 0);
+        wpi.digitalWrite(I1, 1);
 }
 
 
 function backward(){
-wpi.digitalWrite(I1, 1);
-        wpi.digitalWrite(I2, 0);
+wpi.digitalWrite(I2, 1);
+        wpi.digitalWrite(I1, 0);
 }
 
 function brake(){
