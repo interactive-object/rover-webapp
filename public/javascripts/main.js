@@ -1,7 +1,11 @@
 $(function(){
 
+window.now = nowInitialize("/", {});
+
 now.ready(function(){
      console.log("ready")
+     $(".wrapper").show();
+     $(".loader").hide();
 });
 
      var socket = wIsDown = false,
