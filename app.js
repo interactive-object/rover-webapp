@@ -9,7 +9,7 @@ var express = require('express'),
 
 wpi.setup();
 
-var EA=0, I1 = 2, I2 =3, EB=12, I3=13, I4=14;
+var EA=0, I1 = 3, I2 =2, EB=12, I3=13, I4=14;
 
 wpi.pinMode(EA, wpi.modes.OUTPUT);
 wpi.pinMode(I1, wpi.modes.OUTPUT);
