@@ -3,7 +3,7 @@ var express = require('express'),
 	util = require('util'),
 	app = express(),
 	_ = require('underscore'),
-	nowjs = require("now"),
+	sockjs = require('sockjs')
 	wpi = require('wiring-pi'),
 	async = require('async');
 
@@ -49,63 +49,60 @@ app.get('/', function (req, res) {
 
 
 
+
+
+var sockjs = sockjs.createServer();
+sockjs.on('connection', function(socket) {
+	
+    socket.on('data', function(message) {
+    	
+    	switch(message){
+    		case "forward": forward(); break;
+    		case "backward": backward(); break;
+    		case "left": left(); break;
+    		case "right": right(); break;
+    		case "stop": brake(); break;
+    		case "straight": straight(); break;
+    	};
+       	//conn.write(message);
+    });
+    
+    socket.on('close', function() {
+    	
+    });
+    
+});
+
 var server = app.listen(app.get('port'));
-var everyone = require("now").initialize(server);
+sockjs.installHandlers(server, {prefix:'/socket'});
 
-everyone.now.forward = function (req, res) {
-  forward();
-  console.log("forward");
-}
 
-everyone.now.backward = function (req, res) {
-  backward();
-  console.log("backward");
-}
 
-everyone.now.left = function (req, res) {
-  left();
-  console.log("left");
-}
-
-everyone.now.right= function (req, res) {
-  right();
-  console.log("right");
-}
-
-everyone.now.stop = function (req, res) {	
-  brake();
-  console.log("stop");
-}
-
-everyone.now.straight = function (req, res) {	
-  straight();
-  console.log("straight");
-}
 
 function forward(){
-        wpi.digitalWrite(I2, 0);
+       	wpi.digitalWrite(I2, 0);
         wpi.digitalWrite(I1, 1);
 }
 
 
 function backward(){
-wpi.digitalWrite(I2, 1);
+	wpi.digitalWrite(I2, 1);
         wpi.digitalWrite(I1, 0);
 }
 
 function brake(){
-wpi.digitalWrite(I1, 1);
+	wpi.digitalWrite(I1, 1);
         wpi.digitalWrite(I2, 1);
 }
 
 
 function left(){
-wpi.digitalWrite(I3, 0);
+	wpi.digitalWrite(I3, 0);
         wpi.digitalWrite(I4, 1);
 }
 
 function right(){
-wpi.digitalWrite(I3, 1);
+	wpi.digitalWrite(I3, 1);
         wpi.digitalWrite(I4, 0);
 }
 
