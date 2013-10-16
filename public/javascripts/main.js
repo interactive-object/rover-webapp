@@ -1,14 +1,45 @@
 $(function(){
 
-window.now = nowInitialize("/", {});
-
-now.ready(function(){
-     console.log("ready")
+var sock = new SockJS('/socket');
+sock.onopen = function() {
      $(".wrapper").show();
      $(".loader").hide();
-});
+};
+sock.onmessage = function(e) {
+     //console.log('message', e.data);
+     //sock.send("");
+};
+sock.onclose = function() {
+  //console.log('close');
+};
+   
 
-     var socket = wIsDown = false,
+function forward() {
+    sock.send("forward"); 
+}
+
+function backward() {
+    sock.send("backward"); 
+}
+
+function right() {
+     sock.send("right");
+}
+
+function left() {
+     sock.send("left");
+}
+
+function straight() {
+     sock.send("straight");
+}
+
+function stop() {
+     sock.send("stop");
+}
+
+
+var wIsDown = false,
     aIsDown = false,
     sIsDown = false,
     dIsDown = false;
@@ -20,25 +51,25 @@ now.ready(function(){
       case 38:
         if(wIsDown) return;
         wIsDown = true;
-        now.forward();
+        forward();
         $('.up').addClass('active');
         break;
       case 37:
         if(aIsDown) return;
         aIsDown = true;
-        now.left();
+        left();
         $('.left').addClass('active');
         break;
       case 40:
         if(sIsDown) return;
         sIsDown = true;
-        now.backward();
+        backward();
         $('.down').addClass('active');
         break;
       case 39:
         if(dIsDown) return;
         dIsDown = true;
-        now.right();
+        right();
         $('.right').addClass('active');
         break;
     }
@@ -49,25 +80,25 @@ now.ready(function(){
       case 38:
         if(!wIsDown) return;
         wIsDown = false;
-        now.stop();
+        stop();
         $('.up').removeClass('active');
         break;
       case 37:
         if(!aIsDown) return;
         aIsDown = false;
-        now.straight();
+        straight();
         $('.left').removeClass('active');
         break;
       case 40:
         if(!sIsDown) return;
         sIsDown = false;
-        now.stop();
+        stop();
         $('.down').removeClass('active');
         break;
       case 39:
         if(!dIsDown) return;
         dIsDown = false;
-        now.straight();
+        straight();
         $('.right').removeClass('active');
         break;
     }
