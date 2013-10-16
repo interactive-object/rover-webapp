@@ -10,7 +10,7 @@
     	"serialport":"*",
     	"jade": "*",
 	"underscore": "*",
-	"now": "*",
+	"sockjs": "*",
 	"wiring-pi": "*",
 	"async": "*"
   }
