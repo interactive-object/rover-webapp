@@ -49,7 +49,7 @@ a{
   cursor: pointer;
   border-top:1px solid #222;
 }
-a.active{
+a.active, a:active {
   color:#888;
   background: red;
   box-shadow:
