@@ -4,13 +4,14 @@ var sock = new SockJS('/socket');
 sock.onopen = function() {
      $(".wrapper").show();
      $(".loader").hide();
+     console.log('opened');
 };
 sock.onmessage = function(e) {
      //console.log('message', e.data);
      //sock.send("");
 };
 sock.onclose = function() {
-  //console.log('close');
+  console.log('closed');
 };
    
 
@@ -37,6 +38,48 @@ function straight() {
 function stop() {
      sock.send("stop");
 }
+
+$('.up').mousedown(function(){
+     if(wIsDown) return;
+     wIsDown = true;
+     forward();
+}).mouseup(function(){
+     if(!wIsDown) return;
+     wIsDown = false;
+     stop();
+});
+
+
+$('.down').mousedown(function(){
+     if(sIsDown) return;
+     sIsDown = true;
+     backward();
+}).mouseup(function(){
+     if(!sIsDown) return;
+     sIsDown = false;
+     stop();
+});
+
+
+$('.left').mousedown(function(){
+     if(aIsDown) return;
+     aIsDown = true;
+     left();
+}).mouseup(function(){
+     if(!aIsDown) return;
+     aIsDown = false;
+     straight();
+});
+
+$('.right').mousedown(function(){
+     if(dIsDown) return;
+     dIsDown = true;
+     right();
+}).mouseup(function(){
+     if(!dIsDown) return;
+     dIsDown = false;
+     straight();
+});
 
 
 var wIsDown = false,
