@@ -8,7 +8,7 @@ var express = require('express'),
 	util = require('util'),
 	app = express(),
 	_ = require('underscore'),
-	nowjs = require("now");
+	sockjs = require('sockjs');
 
 
 
@@ -46,32 +46,60 @@ app.get('/', function (req, res) {
 });
 
 
+
+var sockjs = sockjs.createServer();
+sockjs.on('connection', function(socket) {
+	
+    socket.on('data', function(message) {
+    	
+    	switch(message){
+    		case "forward": forward(); break;
+    		case "backward": backward(); break;
+    		case "left": left(); break;
+    		case "right": right(); break;
+    		case "stop": brake(); break;
+    		case "straight": straight(); break;
+    	};
+       	//conn.write(message);
+    });
+    
+    socket.on('close', function() {
+    	
+    });
+    
+});
+
 var server = app.listen(app.get('port'));
-var everyone = require("now").initialize(server);
+sockjs.installHandlers(server, {prefix:'/socket'});
 
-everyone.now.forward = function(callback){
-  serial.write('F');
-  stop();
+
+
+
+function forward(){
+	serial.write('F');
 }
 
-everyone.now.backward = function(callback){
-  serial.write('B');
-  stop();
+
+function backward(){
+	serial.write('B');
 }
 
-everyone.now.left = function(callback){
-  serial.write('L');
-  stop();
+function brake(){
+	serial.write('S');
 }
 
-everyone.now.right = function(callback){
-  serial.write('R');
-  stop();
+
+function left(){
+	serial.write('L');
 }
 
-function stop(){
-  setTimeout(function(){
-  serial.write('S');  
-  }, 500);
+function right(){
+	serial.write('R');
 }
+
+
+function straight(){
+	serial.write('T');
+}
+
 
