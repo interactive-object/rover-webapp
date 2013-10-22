@@ -17,7 +17,7 @@ var SerialPort = require("serialport").SerialPort;
 
 var serial = new SerialPort("/dev/ttyAMA0", { baudrate : 57600 });
 serial.on("data", function (sdata) {
-  
+  console.log(sdata);
 });
 
 serial.on("open", function (sdata) {
