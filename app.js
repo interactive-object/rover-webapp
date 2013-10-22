@@ -1,113 +1,77 @@
+/**
+ * Module dependencies.
+ */
+
 var express = require('express'), 
 	http = require('http'),
+	events = require('events'),
 	util = require('util'),
 	app = express(),
 	_ = require('underscore'),
-	sockjs = require('sockjs')
-	wpi = require('wiring-pi'),
-	async = require('async');
+	nowjs = require("now");
 
-wpi.setup();
 
-var EA=0, I1 = 2, I2 =3, EB=12, I3=13, I4=14;
 
-wpi.pinMode(EA, wpi.modes.OUTPUT);
-wpi.pinMode(I1, wpi.modes.OUTPUT);
-wpi.pinMode(I2, wpi.modes.OUTPUT);
+var SerialPort = require("serialport").SerialPort;
 
-wpi.pinMode(EB, wpi.modes.OUTPUT);
-wpi.pinMode(I3, wpi.modes.OUTPUT);
-wpi.pinMode(I4, wpi.modes.OUTPUT);
 
-wpi.digitalWrite(I1, 0);
-wpi.digitalWrite(I2, 0);
+var serial = new SerialPort("/dev/ttyAMA0", { baudrate : 57600 });
+serial.on("data", function (sdata) {
+  
+});
 
-wpi.digitalWrite(EA, 1);
-wpi.digitalWrite(EB, 1);
+serial.on("open", function (sdata) {
+  console.log('serial opened');
+});
 
+  
 app.configure(function () {
 	app.set('port', process.env.PORT || 3003);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.favicon());
-	//app.use(express.logger('dev'));
+	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	//app.use(express.static(__dirname + '/public'));
 	app.use(express.static(require('path').resolve(__dirname + "/public")));
 });
 
-
 app.configure('development', function () {
 	app.use(express.errorHandler());
 });
-
 
 app.get('/', function (req, res) {
 	res.render('index');
 });
 
 
-
-
-
-var sockjs = sockjs.createServer();
-sockjs.on('connection', function(socket) {
-	
-    socket.on('data', function(message) {
-    	
-    	switch(message){
-    		case "forward": forward(); break;
-    		case "backward": backward(); break;
-    		case "left": left(); break;
-    		case "right": right(); break;
-    		case "stop": brake(); break;
-    		case "straight": straight(); break;
-    	};
-       	//conn.write(message);
-    });
-    
-    socket.on('close', function() {
-    	
-    });
-    
-});
-
 var server = app.listen(app.get('port'));
-sockjs.installHandlers(server, {prefix:'/socket'});
+var everyone = require("now").initialize(server);
 
-
-
-
-function forward(){
-       	wpi.digitalWrite(I2, 0);
-        wpi.digitalWrite(I1, 1);
+everyone.now.forward = function(callback){
+  serial.write('F');
+  stop();
 }
 
-
-function backward(){
-	wpi.digitalWrite(I2, 1);
-        wpi.digitalWrite(I1, 0);
+everyone.now.backward = function(callback){
+  serial.write('B');
+  stop();
 }
 
-function brake(){
-	wpi.digitalWrite(I1, 1);
-        wpi.digitalWrite(I2, 1);
+everyone.now.left = function(callback){
+  serial.write('L');
+  stop();
 }
 
-
-function left(){
-	wpi.digitalWrite(I3, 0);
-        wpi.digitalWrite(I4, 1);
+everyone.now.right = function(callback){
+  serial.write('R');
+  stop();
 }
 
-function right(){
-	wpi.digitalWrite(I3, 1);
-        wpi.digitalWrite(I4, 0);
+function stop(){
+  setTimeout(function(){
+  serial.write('S');  
+  }, 500);
 }
 
-
-function straight(){
-        wpi.digitalWrite(I3, 1);
-        wpi.digitalWrite(I4, 1);
-}
