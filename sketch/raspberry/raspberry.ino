@@ -65,6 +65,8 @@ void setup()
 
 }
 
+// http://learn.adafruit.com/trinket-ultrasonic-rangefinder/code
+
 void loop()
 {
   /*
