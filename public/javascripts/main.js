@@ -39,6 +39,21 @@ function stop() {
      sock.send("stop");
 }
 
+GameController.init( { 
+    left: {
+        position: { left: '50%', bottom: '5%' }, 
+        dpad: { 
+            up: false, 
+            down: false, 
+            left: { width: '50%', height: '10%' }, 
+            right: { width: '50%', height: '10%' } 
+        } 
+    }, 
+    right: false
+} );
+
+
+
 $('.up').mousedown(function(){
      if(wIsDown) return;
      wIsDown = true;
