@@ -41,60 +41,24 @@ function stop() {
 
 GameController.init( { 
     left: {
-        position: { left: '50%', bottom: '5%' }, 
-        dpad: { 
-            up: false, 
-            down: false, 
-            left: { width: '50%', height: '10%' }, 
-            right: { width: '50%', height: '10%' } 
-        } 
+        type: 'joystick', 
+        position: { left: '15%', bottom: '15%' },
+        touchMove: function( details ) {
+            console.log( details.normalizedX );
+            console.log( details.normalizedY );
+        }
     }, 
-    right: false
-} );
-
-
-
-$('.up').mousedown(function(){
-     if(wIsDown) return;
-     wIsDown = true;
-     forward();
-}).mouseup(function(){
-     if(!wIsDown) return;
-     wIsDown = false;
-     stop();
+    right: { 
+        type: 'joystick', 
+        position: { right: '15%', bottom: '15%' } ,
+        touchMove: function( details ) {
+            console.log( details.normalizedX );
+            console.log( details.normalizedY );
+        }
+    }
 });
 
 
-$('.down').mousedown(function(){
-     if(sIsDown) return;
-     sIsDown = true;
-     backward();
-}).mouseup(function(){
-     if(!sIsDown) return;
-     sIsDown = false;
-     stop();
-});
-
-
-$('.left').mousedown(function(){
-     if(aIsDown) return;
-     aIsDown = true;
-     left();
-}).mouseup(function(){
-     if(!aIsDown) return;
-     aIsDown = false;
-     straight();
-});
-
-$('.right').mousedown(function(){
-     if(dIsDown) return;
-     dIsDown = true;
-     right();
-}).mouseup(function(){
-     if(!dIsDown) return;
-     dIsDown = false;
-     straight();
-});
 
 
 var wIsDown = false,
