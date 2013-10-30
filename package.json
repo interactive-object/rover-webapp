@@ -7,11 +7,8 @@
   },
   "dependencies": {
     	"express": "*",
-    	"serialport":"*",
     	"jade": "*",
 	"underscore": "*",
-	"now": "*",
-	"wiring-pi": "*",
 	"async": "*"
   }
 }
