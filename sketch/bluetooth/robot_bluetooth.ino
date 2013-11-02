@@ -1,7 +1,7 @@
 /*
 Arduinoe Code to run the Sparkfun TB6612FNG 1A Dual Motor Driver
 
-This code conducts a few simple manoeuvres to illustrate the functions:
+Functions:
   - motorDrive(motorNumber, motorDirection, motorSpeed)
   - motorBrake(motorNumber)
   - motorStop(motorNumber)
@@ -105,7 +105,7 @@ void loop()
     // delay 10 milliseconds to allow serial update time
     delay(10);
 
-    if( val == 'F' )                     // if 'H' was received
+    if( val == 'F' ) // if 'F' was received
     {
       //Drive both motors CW, full speed
       motorDrive(motor1, turnCW, 255);

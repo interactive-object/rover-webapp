@@ -9,6 +9,7 @@
     	"express": "*",
     	"jade": "*",
 	"underscore": "*",
+	"sockjs": "*",
 	"async": "*"
   }
 }

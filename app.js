@@ -1,29 +1,28 @@
+/**
+ * Module dependencies.
+ */
+
 var express = require('express'), 
 	http = require('http'),
+	events = require('events'),
 	util = require('util'),
 	app = express(),
 	_ = require('underscore'),
-	nowjs = require("now"),
-	wpi = require('wiring-pi'),
-	async = require('async');
+	sockjs = require('sockjs');
 
-wpi.setup();
 
-var EA=0, I1 = 2, I2 =3, EB=12, I3=13, I4=14;
 
-wpi.pinMode(EA, wpi.modes.OUTPUT);
-wpi.pinMode(I1, wpi.modes.OUTPUT);
-wpi.pinMode(I2, wpi.modes.OUTPUT);
+var SerialPort = require("serialport").SerialPort;
 
-wpi.pinMode(EB, wpi.modes.OUTPUT);
-wpi.pinMode(I3, wpi.modes.OUTPUT);
-wpi.pinMode(I4, wpi.modes.OUTPUT);
+const DEBUG_PORT = "/dev/tty.usbserial-AD025FSP";
+const PI_PORT = "/dev/ttyAMA0";
 
-wpi.digitalWrite(I1, 0);
-wpi.digitalWrite(I2, 0);
+var serial = new SerialPort(DEBUG_PORT, { baudrate : 115200 });
 
-wpi.digitalWrite(EA, 1);
-wpi.digitalWrite(EB, 1);
+serial.send = function(action, value){
+	if(value) serial.write(action+","+value); 
+	else serial.write(action+",0");
+}
 
 app.configure(function () {
 	app.set('port', process.env.PORT || 3003);
@@ -37,80 +36,95 @@ app.configure(function () {
 	app.use(express.static(require('path').resolve(__dirname + "/public")));
 });
 
-
 app.configure('development', function () {
 	app.use(express.errorHandler());
 });
-
 
 app.get('/', function (req, res) {
 	res.render('index');
 });
 
 
+var socket = null;
+var sockjs = sockjs.createServer();
+sockjs.on('connection', function(s) {
+	
+		socket = s;
+    socket.on('data', function(message) {
+    	
+    	switch(message){
+    		case "forward": forward(); break;
+    		case "backward": backward(); break;
+    		case "left": left(); break;
+    		case "right": right(); break;
+    		case "stop": brake(); break;
+    		case "straight": straight(); break;
+    	};
+      
+    });
+    
+    socket.on('close', function() {
+    	
+    });
+    
+});
 
 var server = app.listen(app.get('port'));
-var everyone = require("now").initialize(server);
+sockjs.installHandlers(server, {prefix:'/socket'});
 
-everyone.now.forward = function (req, res) {
-  forward();
-  console.log("forward");
-}
 
-everyone.now.backward = function (req, res) {
-  backward();
-  console.log("backward");
-}
 
-everyone.now.left = function (req, res) {
-  left();
-  console.log("left");
-}
+serial.on("open", function () {
+  console.log("serial opened");
+	
+  serial.on("data", function(data) {
+   console.log("serial data: ",data.toString());
+	if(data == 0xFF){
+		console.log("ready");
+		if(socket) socket.write("ready");
+	}else{
 
-everyone.now.right= function (req, res) {
-  right();
-  console.log("right");
-}
 
-everyone.now.stop = function (req, res) {	
-  brake();
-  console.log("stop");
-}
+	}
+  });  
+});
 
-everyone.now.straight = function (req, res) {	
-  straight();
-  console.log("straight");
-}
+serial.on("close", function () {
+	console.log("serial closed");
+});
+
+serial.on("error", function (err) {
+	console.log("serial closed", err);
+});
+
 
 function forward(){
-        wpi.digitalWrite(I2, 0);
-        wpi.digitalWrite(I1, 1);
+	//serial.send('forward');
+	serial.send('tilt+');
 }
 
 
 function backward(){
-wpi.digitalWrite(I2, 1);
-        wpi.digitalWrite(I1, 0);
+	//serial.send('backward');
+	serial.send('tilt-');  
 }
 
 function brake(){
-wpi.digitalWrite(I1, 1);
-        wpi.digitalWrite(I2, 1);
+	serial.send('brake');
 }
 
 
 function left(){
-wpi.digitalWrite(I3, 0);
-        wpi.digitalWrite(I4, 1);
+	serial.send('left');
 }
 
 function right(){
-wpi.digitalWrite(I3, 1);
-        wpi.digitalWrite(I4, 0);
+	serial.send('right');
 }
 
 
 function straight(){
-        wpi.digitalWrite(I3, 1);
-        wpi.digitalWrite(I4, 1);
+	serial.send('straight');
 }
+
+

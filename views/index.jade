@@ -11,18 +11,21 @@ html
     link(rel='stylesheet', href='stylesheets/normalize.css')
     link(rel='stylesheet', href='stylesheets/style.css')
 
-    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js')    
-    script(src='/javascripts/json2.js')    
+    script(src='/javascripts/jquery.min.js')    
+    script(src='/javascripts/sock.js')
+    script(src='/javascripts/gamecontroller.js')
     script(src='/javascripts/main.js')
   body
 
   div.loader
     span Chargement...
-  div.wrapper(style="display:none");
+  div.wrapper(style="display:none")
     img(src="/stream/?action=stream")
-    a.up() 
-    a.left() 
-    a.down() 
-    a.right() 
+    .motor
+      a.up() 
+      a.left() 
+      a.down() 
+      a.right() 
+    
           
       
