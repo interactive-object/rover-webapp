@@ -17,11 +17,11 @@ var SerialPort = require("serialport").SerialPort;
 const DEBUG_PORT = "/dev/tty.usbserial-AD025FSP";
 const PI_PORT = "/dev/ttyAMA0";
 
-var serial = new SerialPort(DEBUG_PORT, { baudrate : 115200 });
+var serial = new SerialPort(DEBUG_PORT, { baudrate : 57600 });
 
 serial.send = function(action, value){
-	if(value) serial.write(action+","+value); 
-	else serial.write(action+",0");
+	if(value) serial.write(action+","+value+"\n"); 
+	else serial.write(action+",0\n");
 }
 
 app.configure(function () {
@@ -52,12 +52,13 @@ sockjs.on('connection', function(s) {
 		socket = s;
     socket.on('data', function(message) {
     	
+      console.log("socket message:", message);
     	switch(message){
     		case "forward": forward(); break;
     		case "backward": backward(); break;
     		case "left": left(); break;
     		case "right": right(); break;
-    		case "stop": brake(); break;
+    		case "brake": brake(); break;
     		case "straight": straight(); break;
     	};
       
@@ -81,7 +82,8 @@ serial.on("open", function () {
    console.log("serial data: ",data.toString());
 	if(data == 0xFF){
 		console.log("ready");
-		if(socket) socket.write("ready");
+    serial.send("arm");
+    if(socket) socket.write("ready");
 	}else{
 
 
@@ -99,14 +101,14 @@ serial.on("error", function (err) {
 
 
 function forward(){
-	//serial.send('forward');
-	serial.send('tilt+');
+	serial.send('forward');
+	//serial.send('tilt+');
 }
 
 
 function backward(){
-	//serial.send('backward');
-	serial.send('tilt-');  
+	serial.send('backward');
+	//serial.send('tilt-');  
 }
 
 function brake(){

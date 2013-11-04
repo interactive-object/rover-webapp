@@ -97,7 +97,7 @@ var wIsDown = false,
       case 40:
         if(!sIsDown) return;
         sIsDown = false;
-        stop();
+        brake();
         $('.down').removeClass('active');
         break;
       case 39:
