@@ -15,9 +15,16 @@ body{
   margin-left:-160px;
 }
 
-canvas {
- display:block;
+.camera-controls {
+width: 640px;
+height: 730px;
+position: absolute;
+top: 50%;
+left: 50%;
+margin-top: -357px;
+margin-left: -310px;
 }
+
 
 img{
   position:absolute;
@@ -30,7 +37,7 @@ img{
   padding:0;
 }
 
-a{
+.controls a{
   display:block;
   width:100px;
   height:100px;
@@ -50,7 +57,7 @@ a{
   cursor: pointer;
   border-top:1px solid #222;
 }
-a.active, a:active {
+.controls a.active, .controls a:active {
   color:#888;
   background: red;
   box-shadow:
@@ -74,4 +81,46 @@ a.active, a:active {
 .right{
   right:0;
   top:624px;
+}
+
+.camera-controls a {
+display:block;
+  width:100px;
+  height:100px;
+  color:#aaa;
+  text-align:center;
+  position:absolute;
+  text-shadow:0 -1px 0 black;
+  font: bold 15px/100px arial, sans-serif;
+  text-transform:uppercase;
+  cursor: pointer;
+}
+
+.camera-controls a:hover {
+	background: rgba(255, 255, 255, 0.2)
+}
+
+.tiltplus {
+	top: 200px;
+}
+
+.tiltminus {
+	top: 200px;
+	right: 0;
+}
+
+.panplus {
+	left: 260px;
+}
+
+.panminus {
+	left: 260px;
+	top: 400px;
+}
+
+.speak {
+top: 0;
+left:0;
+position: fixed;
+display: block;
 }

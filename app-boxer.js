@@ -8,6 +8,7 @@ var express = require('express'),
 	util = require('util'),
 	app = express(),
 	_ = require('underscore'),
+	spawn = require('child_process').spawn,
 	sockjs = require('sockjs');
 
 
@@ -60,10 +61,7 @@ sockjs.on('connection', function(s) {
     		case "right": right(); break;
     		case "brake": brake(); break;
     		case "straight": straight(); break;
-		case "tilt+": tiltplus(); break;
-		case "tilt-": tiltminus(); break;
-		case "pan+": panplus(); break;
-		case "pan-": panminus(); break;
+		default: speak(message); 
     	};
       
     });
@@ -98,52 +96,47 @@ serial.on("open", function () {
 serial.on("close", function () {
 	console.log("serial closed");
 });
-
 serial.on("error", function (err) {
 	console.log("serial closed", err);
 });
 
-function tiltplus(){
-	serial.send("tilt+");
-}
-
-function tiltminus(){
-	serial.send("tilt-");
-}
-
-function panplus(){
-	serial.send("pan+");
-}
-
-function panminus(){
-	serial.send("pan-");
-}
 
 function forward(){
-	serial.send('forward');
+	serial.write('F');
 }
 
+function speak(value){
+	var child = spawn("speech", [value]);
+	child.on('error', function() { console.log(arguments); });
+}
 
 function backward(){
-	serial.send('backward');
+	serial.write('B');
 }
 
 function brake(){
-	serial.send('brake');
+	serial.write('S');
 }
 
 
 function left(){
-	serial.send('left');
+	serial.write('L');
 }
 
 function right(){
-	serial.send('right');
+	serial.write('R');
 }
 
 
 function straight(){
-	serial.send('straight');
+	serial.write('S');
 }
 
+function run_cmd(cmd, args, cb, end) {
+    var spawn = require('child_process').spawn,
+        child = spawn(cmd, args, {cwd: process.env.HOME, env:_.extend(process.env, { PATH: process.env.PATH + ':/usr/local/bin' }) }),
+        me = this;
+    child.stdout.on('data', function (buffer) { cb(me, buffer) });
+    child.stdout.on('end', end);
+}
 
