@@ -161,44 +161,105 @@ $(".speak").mousedown(function(){
 		}
 		});
 
-var tp_interval;
+
+
+var tp_interval, tm_interval, pp_interval, pm_interval;
+
 $(".tiltplus").mousedown(function(){
-		tp_interval = setInterval(function(){
-			sock.send("tilt+");
-			},200);
+			tiltplus();
 		}).mouseup(function(){
-			clearInterval(tp_interval);
-			});
+			tiltplus_stop();
+			}).bind( "touchstart", function(e){
+				tiltplus();
+				}).bind( "touchend", function(e){
+					tiltplus_stop();
+					});
+
+function tiltplus(){
+	if(tp_interval) clearInterval(tp_interval);
+	if(tm_interval) clearInterval(tm_interval);
+	tp_interval = setInterval(function(){
+		sock.send("tilt+");
+	},100);
+}
+
+function tiltplus_stop(){
+	clearInterval(tp_interval);
+}
 
 
-var tm_interval;
 $(".tiltminus").mousedown(function(){
-		tm_interval = setInterval(function(){
-			sock.send("tilt-");
-			},200);
+			tiltminus();
 		}).mouseup(function(){
-			clearInterval(tm_interval);
-			});
+			tiltminus_stop();
+			}).bind( "touchstart", function(e){
+				tiltminus();
+				}).bind( "touchend", function(e){
+					tiltminus_stop();
+					});
+
+function tiltminus(){
+	if(tp_interval) clearInterval(tp_interval);
+	if(tm_interval) clearInterval(tm_interval);
+	tm_interval = setInterval(function(){
+		sock.send("tilt-");
+	},100);
+}
+
+function tiltminus_stop(){
+	clearInterval(tm_interval);
+}
 
 
-var pp_interval;
+
+
 $(".panplus").mousedown(function(){
-		pp_interval = setInterval(function(){
-			sock.send("pan+");
-			},200);
+			panplus();
 		}).mouseup(function(){
-			clearInterval(pp_interval);
-			});
+			panplus_stop();
+			}).bind( "touchstart", function(e){
+				panplus();
+				}).bind( "touchend", function(e){
+					panplus_stop();
+					});;
+
+			
+function panplus(){
+	if(pp_interval) clearInterval(pp_interval);
+	if(pm_interval) clearInterval(pm_interval);
+	pp_interval = setInterval(function(){
+		sock.send("pan+");
+	},100);
+}
+
+function panplus_stop(){
+	clearInterval(pp_interval);
+}
 
 
-var pm_interval;
+
+
 $(".panminus").mousedown(function(){
-		pm_interval = setInterval(function(){
-			sock.send("pan-");
-			},200);
+			panminus();
 		}).mouseup(function(){
-			clearInterval(pm_interval);
-			});
+			panminus_stop();
+			}).bind( "touchstart", function(e){
+				panminus();
+				}).bind( "touchend", function(e){
+					panminus_stop();
+					});
+			
+function panminus(){
+		if(pp_interval) clearInterval(pp_interval);
+	if(pm_interval) clearInterval(pm_interval);
+	pm_interval = setInterval(function(){
+		sock.send("pan-");
+	},100);
+}
+
+function panminus_stop(){
+	clearInterval(pm_interval);
+}
 
 
 
